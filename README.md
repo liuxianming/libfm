@@ -1,7 +1,7 @@
 libFM
 =====
 
-Forked from libFM(https://github.com/srendle/libfm).
+Forked from [libFM](https://github.com/srendle/libfm).
 
 Adding functionality to support I/O and restoring from Breakpoints.
 
