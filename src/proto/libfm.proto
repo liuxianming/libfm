@@ -1,4 +1,11 @@
 package libFM;
 
-Message Proto_fm_model{
+message Proto_fm_model{
+    required uint32 num_attributes = 1;
+    required int32 num_factors = 2;
+    required bool k0 = 3 [default = true];
+    required bool k1 = 4 [default = true];
+    required double w0 = 5 [default = 0.0];
+    required string w_str = 6;
+    required string v_str = 7;
 }

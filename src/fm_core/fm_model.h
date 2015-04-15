@@ -34,7 +34,7 @@
 #include "../util/matrix.h"
 #include "../util/fmatrix.h"
 #include "./fm_data.h"
-
+#include "./libfm.pb.h"
 
 class fm_model {
 private:
