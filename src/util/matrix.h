@@ -22,12 +22,15 @@
 #ifndef MATRIX_H_
 #define MATRIX_H_
 
-#include <vector>
 #include <assert.h>
+#include <vector>
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <sstream>
 #include "../util/memory.h"
 #include "../util/random.h"
+
 
 const uint DVECTOR_EXPECTED_FILE_ID = 1;
 const uint DMATRIX_EXPECTED_FILE_ID = 1001;
@@ -47,7 +50,7 @@ public:
   uint dim1, dim2;
 
   T get(uint x, uint y) {
-    //assert((x < dim1) && (y < dim2));
+    // assert((x < dim1) && (y < dim2));
     return value[x][y];
   }
 
@@ -128,8 +131,8 @@ public:
   }
 
   void save(std::string filename, bool has_header = false) {
-    std::ofstream out_file (filename.c_str());
-    if (out_file.is_open())	{
+    std::ofstream out_file(filename.c_str());
+    if (out_file.is_open()) {
       if (has_header) {
         for (uint i_2 = 0; i_2 < dim2; i_2++) {
           if (i_2 > 0) {
@@ -156,7 +159,8 @@ public:
 
   void saveToBinaryFile(std::string filename) {
     std::cout << "writing to " << filename << std::endl; std::cout.flush();
-    std::ofstream out(filename.c_str(), std::ios_base::out | std::ios_base::binary);
+    std::ofstream out(filename.c_str(),
+                      std::ios_base::out | std::ios_base::binary);
     if (out.is_open()) {
       dmatrix_file_header fh;
       fh.id = DMATRIX_EXPECTED_FILE_ID;
@@ -173,9 +177,27 @@ public:
     }
   }
 
+  std::string ToBinaryStr() {
+    // Transform a matrix into a binary string
+    std::stringstream ss;
+    dmatrix_file_header fh;
+    fh.id = DMATRIX_EXPECTED_FILE_ID;
+    fh.num_rows = dim1;
+    fh.num_cols = dim2;
+    fh.type_size = sizeof(T);
+    ss.write(reinterpret_cast<char*>(&fh), sizeof(fh));
+    for (uint i = 0; i < dim1; i++) {
+      ss.write(reinterpret_cast<char*>(value[i]), sizeof(T)*dim2);
+    }
+    std::string bCode = ss.str();
+    ss.clear();
+    return bCode;
+  }
+
   void loadFromBinaryFile(std::string filename) {
     std::cout << "reading " << filename << std::endl; std::cout.flush();
-    std::ifstream in(filename.c_str(), std::ios_base::in | std::ios_base::binary);
+    std::ifstream in(filename.c_str(),
+                     std::ios_base::in | std::ios_base::binary);
     if (in.is_open()) {
       dmatrix_file_header fh;
       in.read(reinterpret_cast<char*>(&fh), sizeof(fh));
@@ -189,6 +211,19 @@ public:
     } else {
       throw "could not open " + filename;
     }
+  }
+
+  void loadFromBinaryStr(std::string bCode) {
+    std::stringstream ss(bCode);
+    dmatrix_file_header fh;
+    ss.read(reinterpret_cast<char*>(&fh), sizeof(fh));
+    assert(fh.id == DMATRIX_EXPECTED_FILE_ID);
+    assert(fh.type_size == sizeof(T));
+    setSize(fh.num_rows, fh.num_cols);
+    for (uint i = 0; i < dim1; i++) {
+      ss.read(reinterpret_cast<char*>(value[i]), sizeof(T)*dim2);
+    }
+    ss.clear();
   }
 
   void load(std::string filename) {
@@ -290,10 +325,23 @@ public:
     }
   }
 
+  std::string ToBinaryStr() {
+    std::stringstream ss;
+    uint file_version = DVECTOR_EXPECTED_FILE_ID;
+    uint data_size = sizeof(T);
+    uint num_rows = dim;
+    ss.write(reinterpret_cast<char*>(&file_version), sizeof(file_version));
+    ss.write(reinterpret_cast<char*>(&data_size), sizeof(data_size));
+    ss.write(reinterpret_cast<char*>(&num_rows), sizeof(num_rows));
+    ss.write(reinterpret_cast<char*>(value), sizeof(T)*dim);
+    std::string bCode = ss.str();
+    ss.clear();
+    return bCode;
+  }
 
   void load(std::string filename) {
-    std::ifstream in_file (filename.c_str());
-    if (! in_file.is_open()) {
+    std::ifstream in_file(filename.c_str());
+    if (!in_file.is_open()) {
       throw "Unable to open file " + filename;
     }
     for (uint i = 0; i < dim; i++) {
@@ -302,6 +350,21 @@ public:
       value[i] = v;
     }
     in_file.close();
+  }
+
+  void loadFromBinaryStr(std::string bCode) {
+    std::stringstream ss(bCode);
+    uint file_version;
+    uint data_size;
+    uint num_rows;
+    ss.read(reinterpret_cast<char*>(&file_version), sizeof(file_version));
+    ss.read(reinterpret_cast<char*>(&data_size), sizeof(data_size));
+    ss.read(reinterpret_cast<char*>(&num_rows), sizeof(num_rows));
+    assert(file_version == DVECTOR_EXPECTED_FILE_ID);
+    assert(data_size == sizeof(T));
+    setSize(num_rows);
+    ss.read(reinterpret_cast<char*>(value), sizeof(T)*dim);
+    ss.clear();
   }
 
 
