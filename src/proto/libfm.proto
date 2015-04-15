@@ -1,0 +1,4 @@
+package libFM;
+
+Message Proto_fm_model{
+}
