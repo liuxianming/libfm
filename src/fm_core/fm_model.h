@@ -29,6 +29,7 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/base_object.hpp>
+#include <boost/shared_ptr.hpp>
 #include <string>
 
 #include "../util/matrix.h"
@@ -64,12 +65,12 @@ public:
   double predict(sparse_row<FM_FLOAT>& x, DVector<double> &sum, DVector<double> &sum_sqr);
 
   // IO functions: fm_model2str and load fm_model from str
-  void ToStr();
-  void FromStr();
+  Proto_fm_model* ToProto();
+  void FromProto(const Proto_fm_model &model);
 
   // IO: Read from file and write to file
-  // void write(const string filepath);
-  // void load(const string filepath);
+  void write(const string filepath);
+  void load(const string filepath);
 };
 
 
