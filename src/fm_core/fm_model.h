@@ -65,7 +65,7 @@ public:
   double predict(sparse_row<FM_FLOAT>& x, DVector<double> &sum, DVector<double> &sum_sqr);
 
   // IO functions: fm_model2str and load fm_model from str
-  boost::shared_ptr<libFM::Proto_fm_model> ToProto();
+  libFM::Proto_fm_model ToProto();
   void FromProto(const libFM::Proto_fm_model &model);
 
   // IO: Read from file and write to file
@@ -74,17 +74,18 @@ public:
 };
 
 
-boost::shared_ptr<libFM::Proto_fm_model> fm_model::ToProto() {
-  boost::shared_ptr<libFM::Proto_fm_model>
-      model_proto( new libFM::Proto_fm_model());
+libFM::Proto_fm_model fm_model::ToProto() {
+  libFM::Proto_fm_model model_proto;
+  //  boost::shared_ptr<libFM::Proto_fm_model>
+  //      model_proto() new libFM::Proto_fm_model);
   // Write datat to the proto object
-  model_proto.get()->set_w0(this->w0);
-  model_proto.get()->set_k0(this->k0);
-  model_proto.get()->set_k1(this->k1);
-  model_proto.get()->set_num_factors(this->num_factor);
-  model_proto.get()->set_num_attributes(this->num_attribute);
-  model_proto.get()->set_w_str(w.ToBinaryStr());
-  model_proto.get()->set_v_str(v.ToBinaryStr());
+  model_proto.set_w0(this->w0);
+  model_proto.set_k0(this->k0);
+  model_proto.set_k1(this->k1);
+  model_proto.set_num_factors(this->num_factor);
+  model_proto.set_num_attributes(this->num_attribute);
+  model_proto.set_w_str(w.ToBinaryStr());
+  model_proto.set_v_str(v.ToBinaryStr());
   return model_proto;
 }
 
