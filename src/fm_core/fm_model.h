@@ -65,15 +65,43 @@ public:
   double predict(sparse_row<FM_FLOAT>& x, DVector<double> &sum, DVector<double> &sum_sqr);
 
   // IO functions: fm_model2str and load fm_model from str
-  Proto_fm_model* ToProto();
-  void FromProto(const Proto_fm_model &model);
+  boost::shared_ptr<libFM::Proto_fm_model> ToProto();
+  void FromProto(const libFM::Proto_fm_model &model);
 
   // IO: Read from file and write to file
-  void write(const string filepath);
-  void load(const string filepath);
+  //  void write(const std::string filepath);
+  //  void load(const std::string filepath);
 };
 
 
+boost::shared_ptr<libFM::Proto_fm_model> fm_model::ToProto() {
+  boost::shared_ptr<libFM::Proto_fm_model>
+      model_proto( new libFM::Proto_fm_model());
+  // Write datat to the proto object
+  model_proto.get()->set_w0(this->w0);
+  model_proto.get()->set_k0(this->k0);
+  model_proto.get()->set_k1(this->k1);
+  model_proto.get()->set_num_factors(this->num_factor);
+  model_proto.get()->set_num_attributes(this->num_attribute);
+  model_proto.get()->set_w_str(w.ToBinaryStr());
+  model_proto.get()->set_v_str(v.ToBinaryStr());
+  return model_proto;
+}
+
+void fm_model::FromProto(const libFM::Proto_fm_model &model) {
+  this->w0 = model.w0();
+  this->k0 = model.k0();
+  this->k1 = model.k1();
+  this->num_attribute = model.num_attributes();
+  this->num_factor = model.num_factors();
+  this->w.setSize(num_attribute);
+  this->v.setSize(num_factor, num_attribute);
+
+  // load string, and parse into matrix / vector
+  w.loadFromBinaryStr(model.w_str());
+  v.loadFromBinaryStr(model.v_str());
+  // Done parsing
+}
 
 fm_model::fm_model() {
   num_factor = 0;
@@ -93,8 +121,9 @@ void fm_model::debug() {
   std::cout << "dim v =" << num_factor << std::endl;
   std::cout << "reg_w0=" << reg0 << std::endl;
   std::cout << "reg_w=" << regw << std::endl;
-  std::cout << "reg_v=" << regv << std::endl; 
-  std::cout << "init ~ N(" << init_mean << "," << init_stdev << ")" << std::endl;
+  std::cout << "reg_v=" << regv << std::endl;
+  std::cout << "init ~ N(" << init_mean << ","
+            << init_stdev << ")" << std::endl;
 }
 
 void fm_model::init() {
