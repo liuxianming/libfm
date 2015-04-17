@@ -5,6 +5,7 @@ Forked from [libFM](https://github.com/srendle/libfm).
 
 Adding functionality to support I/O and restoring from Breakpoints.
 
+Collaborator: YuChieh Ho and Xianming Liu
 =====
 
 Library for factorization machines
