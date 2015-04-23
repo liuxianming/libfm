@@ -12,14 +12,13 @@ inc += -I../proto/
 inc += -I../fm_core
 libs += -L$(LIB_PROTO_DIR) -lprotobuf -pthread
 cpp += -fPIC -Wall
-proto_cc += ../proto/libfm.pb.cc
+proto_lib += $(BIN_DIR)proto/libfm.pb.o
 
 all: libFM transpose convert
 
 libFM: libfm.o
 	mkdir -p $(BIN_DIR)
-	g++ -c $(inc) $(proto_cc) -o $(BIN_DIR)libfm.pb3 $(libs)
-	g++ -O3 $(cpp) $(inc) libfm.o $(proto_cc) -o $(BIN_DIR)libFM $(libs)
+	g++ -O3 $(cpp) $(inc) libfm.o $(proto_lib) -o $(BIN_DIR)libFM $(libs)
 
 %.o: %.cpp
 	g++ -O3 $(cpp) $(inc) -c $< -o $@ $(libs)
@@ -36,9 +35,9 @@ clean_lib:
 
 transpose: tools/transpose.o
 	mkdir -p $(BIN_DIR)
-	g++ -O3 $(inc) tools/transpose.o $(proto_cc) -o $(BIN_DIR)transpose $(libs)
+	g++ -O3 $(inc) tools/transpose.o $(proto_lib) -o $(BIN_DIR)transpose $(libs)
 
 convert: tools/convert.o
 	mkdir -p $(BIN_DIR)
-	g++ -O3 $(inc) tools/convert.o $(proto_cc) -o $(BIN_DIR)convert $(libs)
+	g++ -O3 $(inc) tools/convert.o $(proto_lib) -o $(BIN_DIR)convert $(libs)
 

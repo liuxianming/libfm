@@ -44,16 +44,16 @@ void protobuf_AssignDesc_libfm_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Proto_fm_model, v_str_),
   };
   Proto_fm_model_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
       Proto_fm_model_descriptor_,
       Proto_fm_model::default_instance_,
       Proto_fm_model_offsets_,
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Proto_fm_model, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Proto_fm_model, _unknown_fields_),
       -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Proto_fm_model));
+      -1,
+      sizeof(Proto_fm_model),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Proto_fm_model, _internal_metadata_),
+      -1);
 }
 
 namespace {
@@ -67,7 +67,7 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Proto_fm_model_descriptor_, &Proto_fm_model::default_instance());
+      Proto_fm_model_descriptor_, &Proto_fm_model::default_instance());
 }
 
 }  // namespace
@@ -103,6 +103,16 @@ struct StaticDescriptorInitializer_libfm_2eproto {
   }
 } static_descriptor_initializer_libfm_2eproto_;
 
+namespace {
+
+static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
+static void MergeFromFail(int line) {
+  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
+}
+
+}  // namespace
+
+
 // ===================================================================
 
 #ifndef _MSC_VER
@@ -116,7 +126,7 @@ const int Proto_fm_model::kVStrFieldNumber;
 #endif  // !_MSC_VER
 
 Proto_fm_model::Proto_fm_model()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message() , _internal_metadata_(NULL)  {
   SharedCtor();
   // @@protoc_insertion_point(constructor:libFM.Proto_fm_model)
 }
@@ -125,7 +135,8 @@ void Proto_fm_model::InitAsDefaultInstance() {
 }
 
 Proto_fm_model::Proto_fm_model(const Proto_fm_model& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:libFM.Proto_fm_model)
@@ -139,8 +150,8 @@ void Proto_fm_model::SharedCtor() {
   k0_ = true;
   k1_ = true;
   w0_ = 0;
-  w_str_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  v_str_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  w_str_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  v_str_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -150,12 +161,8 @@ Proto_fm_model::~Proto_fm_model() {
 }
 
 void Proto_fm_model::SharedDtor() {
-  if (w_str_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete w_str_;
-  }
-  if (v_str_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete v_str_;
-  }
+  w_str_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  v_str_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
   }
 }
@@ -177,42 +184,42 @@ const Proto_fm_model& Proto_fm_model::default_instance() {
 
 Proto_fm_model* Proto_fm_model::default_instance_ = NULL;
 
-Proto_fm_model* Proto_fm_model::New() const {
-  return new Proto_fm_model;
+Proto_fm_model* Proto_fm_model::New(::google::protobuf::Arena* arena) const {
+  Proto_fm_model* n = new Proto_fm_model;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void Proto_fm_model::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<Proto_fm_model*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<Proto_fm_model*>(16)->f)
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
   if (_has_bits_[0 / 32] & 127) {
     ZR_(num_attributes_, w0_);
     k0_ = true;
     k1_ = true;
     if (has_w_str()) {
-      if (w_str_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        w_str_->clear();
-      }
+      w_str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
     if (has_v_str()) {
-      if (v_str_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        v_str_->clear();
-      }
+      v_str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (_internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->Clear();
+  }
 }
 
 bool Proto_fm_model::MergePartialFromCodedStream(
@@ -308,7 +315,7 @@ bool Proto_fm_model::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->w_str().data(), this->w_str().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "w_str");
+            "libFM.Proto_fm_model.w_str");
         } else {
           goto handle_unusual;
         }
@@ -325,7 +332,7 @@ bool Proto_fm_model::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->v_str().data(), this->v_str().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "v_str");
+            "libFM.Proto_fm_model.v_str");
         } else {
           goto handle_unusual;
         }
@@ -388,7 +395,7 @@ void Proto_fm_model::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->w_str().data(), this->w_str().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "w_str");
+      "libFM.Proto_fm_model.w_str");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       6, this->w_str(), output);
   }
@@ -398,12 +405,12 @@ void Proto_fm_model::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->v_str().data(), this->v_str().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "v_str");
+      "libFM.Proto_fm_model.v_str");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       7, this->v_str(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
@@ -443,7 +450,7 @@ void Proto_fm_model::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->w_str().data(), this->w_str().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "w_str");
+      "libFM.Proto_fm_model.w_str");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         6, this->w_str(), target);
@@ -454,13 +461,13 @@ void Proto_fm_model::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->v_str().data(), this->v_str().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "v_str");
+      "libFM.Proto_fm_model.v_str");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         7, this->v_str(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
@@ -468,55 +475,91 @@ void Proto_fm_model::SerializeWithCachedSizes(
   return target;
 }
 
+int Proto_fm_model::RequiredFieldsByteSizeFallback() const {
+  int total_size = 0;
+
+  if (has_num_attributes()) {
+    // required uint32 num_attributes = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->num_attributes());
+  }
+
+  if (has_num_factors()) {
+    // required int32 num_factors = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->num_factors());
+  }
+
+  if (has_k0()) {
+    // required bool k0 = 3 [default = true];
+    total_size += 1 + 1;
+  }
+
+  if (has_k1()) {
+    // required bool k1 = 4 [default = true];
+    total_size += 1 + 1;
+  }
+
+  if (has_w0()) {
+    // required double w0 = 5 [default = 0];
+    total_size += 1 + 8;
+  }
+
+  if (has_w_str()) {
+    // required string w_str = 6;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->w_str());
+  }
+
+  if (has_v_str()) {
+    // required string v_str = 7;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->v_str());
+  }
+
+  return total_size;
+}
 int Proto_fm_model::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (((_has_bits_[0] & 0x0000007f) ^ 0x0000007f) == 0) {  // All required fields are present.
     // required uint32 num_attributes = 1;
-    if (has_num_attributes()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->num_attributes());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->num_attributes());
 
     // required int32 num_factors = 2;
-    if (has_num_factors()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->num_factors());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->num_factors());
 
     // required bool k0 = 3 [default = true];
-    if (has_k0()) {
-      total_size += 1 + 1;
-    }
+    total_size += 1 + 1;
 
     // required bool k1 = 4 [default = true];
-    if (has_k1()) {
-      total_size += 1 + 1;
-    }
+    total_size += 1 + 1;
 
     // required double w0 = 5 [default = 0];
-    if (has_w0()) {
-      total_size += 1 + 8;
-    }
+    total_size += 1 + 8;
 
     // required string w_str = 6;
-    if (has_w_str()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->w_str());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->w_str());
 
     // required string v_str = 7;
-    if (has_v_str()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->v_str());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->v_str());
 
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
@@ -528,7 +571,7 @@ int Proto_fm_model::ByteSize() const {
 }
 
 void Proto_fm_model::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   const Proto_fm_model* source =
     ::google::protobuf::internal::dynamic_cast_if_available<const Proto_fm_model*>(
       &from);
@@ -540,7 +583,7 @@ void Proto_fm_model::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void Proto_fm_model::MergeFrom(const Proto_fm_model& from) {
-  GOOGLE_CHECK_NE(&from, this);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_num_attributes()) {
       set_num_attributes(from.num_attributes());
@@ -558,13 +601,17 @@ void Proto_fm_model::MergeFrom(const Proto_fm_model& from) {
       set_w0(from.w0());
     }
     if (from.has_w_str()) {
-      set_w_str(from.w_str());
+      set_has_w_str();
+      w_str_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.w_str_);
     }
     if (from.has_v_str()) {
-      set_v_str(from.v_str());
+      set_has_v_str();
+      v_str_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.v_str_);
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  if (from._internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  }
 }
 
 void Proto_fm_model::CopyFrom(const ::google::protobuf::Message& from) {
@@ -586,18 +633,20 @@ bool Proto_fm_model::IsInitialized() const {
 }
 
 void Proto_fm_model::Swap(Proto_fm_model* other) {
-  if (other != this) {
-    std::swap(num_attributes_, other->num_attributes_);
-    std::swap(num_factors_, other->num_factors_);
-    std::swap(k0_, other->k0_);
-    std::swap(k1_, other->k1_);
-    std::swap(w0_, other->w0_);
-    std::swap(w_str_, other->w_str_);
-    std::swap(v_str_, other->v_str_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void Proto_fm_model::InternalSwap(Proto_fm_model* other) {
+  std::swap(num_attributes_, other->num_attributes_);
+  std::swap(num_factors_, other->num_factors_);
+  std::swap(k0_, other->k0_);
+  std::swap(k1_, other->k1_);
+  std::swap(w0_, other->w0_);
+  w_str_.Swap(&other->w_str_);
+  v_str_.Swap(&other->v_str_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Proto_fm_model::GetMetadata() const {
@@ -608,6 +657,236 @@ void Proto_fm_model::Swap(Proto_fm_model* other) {
   return metadata;
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// Proto_fm_model
+
+// required uint32 num_attributes = 1;
+ bool Proto_fm_model::has_num_attributes() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+ void Proto_fm_model::set_has_num_attributes() {
+  _has_bits_[0] |= 0x00000001u;
+}
+ void Proto_fm_model::clear_has_num_attributes() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+ void Proto_fm_model::clear_num_attributes() {
+  num_attributes_ = 0u;
+  clear_has_num_attributes();
+}
+ ::google::protobuf::uint32 Proto_fm_model::num_attributes() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.num_attributes)
+  return num_attributes_;
+}
+ void Proto_fm_model::set_num_attributes(::google::protobuf::uint32 value) {
+  set_has_num_attributes();
+  num_attributes_ = value;
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.num_attributes)
+}
+
+// required int32 num_factors = 2;
+ bool Proto_fm_model::has_num_factors() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+ void Proto_fm_model::set_has_num_factors() {
+  _has_bits_[0] |= 0x00000002u;
+}
+ void Proto_fm_model::clear_has_num_factors() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+ void Proto_fm_model::clear_num_factors() {
+  num_factors_ = 0;
+  clear_has_num_factors();
+}
+ ::google::protobuf::int32 Proto_fm_model::num_factors() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.num_factors)
+  return num_factors_;
+}
+ void Proto_fm_model::set_num_factors(::google::protobuf::int32 value) {
+  set_has_num_factors();
+  num_factors_ = value;
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.num_factors)
+}
+
+// required bool k0 = 3 [default = true];
+ bool Proto_fm_model::has_k0() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+ void Proto_fm_model::set_has_k0() {
+  _has_bits_[0] |= 0x00000004u;
+}
+ void Proto_fm_model::clear_has_k0() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+ void Proto_fm_model::clear_k0() {
+  k0_ = true;
+  clear_has_k0();
+}
+ bool Proto_fm_model::k0() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.k0)
+  return k0_;
+}
+ void Proto_fm_model::set_k0(bool value) {
+  set_has_k0();
+  k0_ = value;
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.k0)
+}
+
+// required bool k1 = 4 [default = true];
+ bool Proto_fm_model::has_k1() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+ void Proto_fm_model::set_has_k1() {
+  _has_bits_[0] |= 0x00000008u;
+}
+ void Proto_fm_model::clear_has_k1() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+ void Proto_fm_model::clear_k1() {
+  k1_ = true;
+  clear_has_k1();
+}
+ bool Proto_fm_model::k1() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.k1)
+  return k1_;
+}
+ void Proto_fm_model::set_k1(bool value) {
+  set_has_k1();
+  k1_ = value;
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.k1)
+}
+
+// required double w0 = 5 [default = 0];
+ bool Proto_fm_model::has_w0() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+ void Proto_fm_model::set_has_w0() {
+  _has_bits_[0] |= 0x00000010u;
+}
+ void Proto_fm_model::clear_has_w0() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+ void Proto_fm_model::clear_w0() {
+  w0_ = 0;
+  clear_has_w0();
+}
+ double Proto_fm_model::w0() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.w0)
+  return w0_;
+}
+ void Proto_fm_model::set_w0(double value) {
+  set_has_w0();
+  w0_ = value;
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.w0)
+}
+
+// required string w_str = 6;
+ bool Proto_fm_model::has_w_str() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+ void Proto_fm_model::set_has_w_str() {
+  _has_bits_[0] |= 0x00000020u;
+}
+ void Proto_fm_model::clear_has_w_str() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+ void Proto_fm_model::clear_w_str() {
+  w_str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_w_str();
+}
+ const ::std::string& Proto_fm_model::w_str() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.w_str)
+  return w_str_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void Proto_fm_model::set_w_str(const ::std::string& value) {
+  set_has_w_str();
+  w_str_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.w_str)
+}
+ void Proto_fm_model::set_w_str(const char* value) {
+  set_has_w_str();
+  w_str_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:libFM.Proto_fm_model.w_str)
+}
+ void Proto_fm_model::set_w_str(const char* value, size_t size) {
+  set_has_w_str();
+  w_str_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:libFM.Proto_fm_model.w_str)
+}
+ ::std::string* Proto_fm_model::mutable_w_str() {
+  set_has_w_str();
+  // @@protoc_insertion_point(field_mutable:libFM.Proto_fm_model.w_str)
+  return w_str_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* Proto_fm_model::release_w_str() {
+  clear_has_w_str();
+  return w_str_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void Proto_fm_model::set_allocated_w_str(::std::string* w_str) {
+  if (w_str != NULL) {
+    set_has_w_str();
+  } else {
+    clear_has_w_str();
+  }
+  w_str_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), w_str);
+  // @@protoc_insertion_point(field_set_allocated:libFM.Proto_fm_model.w_str)
+}
+
+// required string v_str = 7;
+ bool Proto_fm_model::has_v_str() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+ void Proto_fm_model::set_has_v_str() {
+  _has_bits_[0] |= 0x00000040u;
+}
+ void Proto_fm_model::clear_has_v_str() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+ void Proto_fm_model::clear_v_str() {
+  v_str_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_v_str();
+}
+ const ::std::string& Proto_fm_model::v_str() const {
+  // @@protoc_insertion_point(field_get:libFM.Proto_fm_model.v_str)
+  return v_str_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void Proto_fm_model::set_v_str(const ::std::string& value) {
+  set_has_v_str();
+  v_str_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:libFM.Proto_fm_model.v_str)
+}
+ void Proto_fm_model::set_v_str(const char* value) {
+  set_has_v_str();
+  v_str_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:libFM.Proto_fm_model.v_str)
+}
+ void Proto_fm_model::set_v_str(const char* value, size_t size) {
+  set_has_v_str();
+  v_str_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:libFM.Proto_fm_model.v_str)
+}
+ ::std::string* Proto_fm_model::mutable_v_str() {
+  set_has_v_str();
+  // @@protoc_insertion_point(field_mutable:libFM.Proto_fm_model.v_str)
+  return v_str_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* Proto_fm_model::release_v_str() {
+  clear_has_v_str();
+  return v_str_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void Proto_fm_model::set_allocated_v_str(::std::string* v_str) {
+  if (v_str != NULL) {
+    set_has_v_str();
+  } else {
+    clear_has_v_str();
+  }
+  v_str_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), v_str);
+  // @@protoc_insertion_point(field_set_allocated:libFM.Proto_fm_model.v_str)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 
