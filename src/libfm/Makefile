@@ -18,7 +18,7 @@ all: libFM transpose convert
 
 libFM: libfm.o
 	mkdir -p $(BIN_DIR)
-	g++ -c $(inc) $(proto_cc) -o $(BIN_DIR)libfm.pb $(libs)
+	g++ -c $(inc) $(proto_cc) -o $(BIN_DIR)libfm.pb3 $(libs)
 	g++ -O3 $(cpp) $(inc) libfm.o $(proto_cc) -o $(BIN_DIR)libFM $(libs)
 
 %.o: %.cpp
