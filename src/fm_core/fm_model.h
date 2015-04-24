@@ -31,6 +31,7 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost/shared_ptr.hpp>
 #include <string>
+#include <fstream>
 
 #include "../util/matrix.h"
 #include "../util/fmatrix.h"
@@ -58,6 +59,7 @@ public:
   double init_stdev;
   double init_mean;
 
+  fm_model(const std::string filepath);
   fm_model();
   void debug();
   void init();
@@ -69,8 +71,8 @@ public:
   void FromProto(const libFM::Proto_fm_model &model);
 
   // IO: Read from file and write to file
-  //  void write(const std::string filepath);
-  //  void load(const std::string filepath);
+  int write(const std::string filepath);
+  int load(const std::string filepath);
 };
 
 
@@ -89,6 +91,20 @@ libFM::Proto_fm_model fm_model::ToProto() {
   return model_proto;
 }
 
+
+int fm_model::write(const std::string filepath) {
+  std::fstream output(filepath.c_str(), std::ios::out | std::ios::trunc | std::ios::binary);
+  libFM::Proto_fm_model model_pb = this->ToProto();
+
+  if (!model_pb.SerializeToOstream(&output)) {
+    std::cerr<<"Failed outpu model to "<<filepath<<std::endl;
+    return -1;
+  }
+  output.close();
+  return 1;
+}
+
+
 void fm_model::FromProto(const libFM::Proto_fm_model &model) {
   this->w0 = model.w0();
   this->k0 = model.k0();
@@ -104,6 +120,20 @@ void fm_model::FromProto(const libFM::Proto_fm_model &model) {
   // Done parsing
 }
 
+int fm_model::load(const std::string filepath) {
+  std::fstream input(filepath.c_str(), std::ios::in | std::ios::binary);
+  libFM::Proto_fm_model model_pb = this->ToProto();
+
+  if (!model_pb.ParseFromIstream(&input)) {
+    std::cerr<<"Failed input model from "<<filepath<<std::endl;
+    return -1;
+  }
+  input.close();
+
+  this->FromProto(model_pb);
+  return 1;
+}
+
 fm_model::fm_model() {
   num_factor = 0;
   init_mean = 0;
@@ -113,6 +143,19 @@ fm_model::fm_model() {
   regv = 0.0;
   k0 = true;
   k1 = true;
+}
+
+fm_model::fm_model(const std::string filepath) {
+  num_factor = 0;
+  init_mean = 0;
+  init_stdev = 0.01;
+  reg0 = 0.0;
+  regw = 0.0;
+  regv = 0.0;
+  k0 = true;
+  k1 = true;
+
+  load(filepath);
 }
 
 void fm_model::debug() {
