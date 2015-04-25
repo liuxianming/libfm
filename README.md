@@ -7,6 +7,14 @@ Adding functionality to support I/O and restoring from Breakpoints.
 
 Collaborator: YuChieh Ho and Xianming Liu
 
+Usage:
+```cpp
+fm_model.load(std::string filepath);
+fm_model.save(std::string filepath);
+fm_model::fm_model(std::string filepath)
+```
+The impelementation uses protobuf to serizalize fm_model class; for matrix and vectors, an implementation changes it to binary string and changes back.
+
 =====
 
 Library for factorization machines
